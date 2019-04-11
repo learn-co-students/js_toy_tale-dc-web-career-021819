@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
 
 
+
   addBtn.addEventListener('click', () => {
     // hide & seek with the form
     addToy = !addToy
@@ -32,11 +33,16 @@ function displaySingleToy(toy){
   let cardDiv = document.createElement('div')
   cardDiv.setAttribute('class', 'card')
 
+  let likeBtn = document.createElement('button')
+  likeBtn.setAttribute('class', 'like-btn')
+  likeBtn.innerText = 'Like <3'
+  likeBtn.addEventListener('click', increaseLike)
+
   cardDiv.innerHTML = `<h2>${toy.name}</h2>
   <img src=${toy.image} class="toy-avatar" />
   <p>${toy.likes} Likes </p>
-  <button class="like-btn">Like <3</button>
 `
+  cardDiv.append(likeBtn)
 
   getToyContainer.appendChild(cardDiv)
 
@@ -80,12 +86,13 @@ function createToy(event){
 function increaseLike(id){
   // find toy card div
   let toyCard = document.getElementsByClassName('card')
+  debugger
 
   // find all children of the card
   let cardChildren = toyCard.findChildren()
 
   // target the likes element
-  cardChildren[2]
+  let likeText = cardChildren[2]
   debugger
 
   fetch('http://localhost:3000/toys/${:id}', {
@@ -100,7 +107,7 @@ function increaseLike(id){
   }).then(res => res.json())
     .then(json => {
       debugger
-      displaySingleToy(json)
+      cardChildren[2].innerHTML = likes
 
     })
 }
